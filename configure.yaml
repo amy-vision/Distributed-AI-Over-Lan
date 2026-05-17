@@ -1,0 +1,40 @@
+# Cluster Configuration
+cluster:
+  master_addr: "192.168.1.100"  # PC 1's IP
+  master_port: "12355"
+ 
+  nodes:
+    - ip: "192.168.1.100"
+      rank: 0
+      role: "master"
+    - ip: "172.30.17.83"
+      rank: 1
+      role: "worker"
+
+# Model Configuration
+model:
+  name: "gpt2"  # GPT-2 Small (124M parameters)
+ 
+# Tensor Parallelism
+tensor_parallel:
+  world_size: 2  # Split model across 2 nodes
+ 
+# Training Configuration
+training:
+  batch_size: 2  # Small batch for testing
+  max_steps: 100  # Just 100 steps for initial test
+  learning_rate: 5e-5
+  save_steps: 20
+  logging_steps: 5
+
+# Dataset
+dataset:
+  name: "wikitext"
+  subset: "wikitext-2-raw-v1"
+  max_length: 128  # Short sequences for faster testing
+
+# Flash Communication
+flash_comm:
+  enabled: true
+  quantization_bits: 8
+  group_size: 128
